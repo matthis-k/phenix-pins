@@ -1,0 +1,5 @@
+{
+  "dependsOn": [],
+  "updateInputs": [],
+  "checks": ["nix flake check"]
+}
