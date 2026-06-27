@@ -1,13 +1,19 @@
 { inputs, ... }: {
   flake = {
-    nixpkgs = inputs.nixpkgs;
-    nixpkgs-stable = inputs.nixpkgs-stable;
+    inherit (inputs) nixpkgs;
+    inherit (inputs) nixpkgs-unstable;
+    inherit (inputs) nixpkgs-stable;
   };
 
   perSystem = { pkgs, ... }: {
     devShells.default = pkgs.mkShell {
       name = "phenix-pins-dev";
-      packages = with pkgs; [ nix nixfmt statix deadnix ];
+      packages = with pkgs; [
+        nix
+        nixfmt
+        statix
+        deadnix
+      ];
       shellHook = ''
         repo-hook() {
           if command -v tend &>/dev/null; then
