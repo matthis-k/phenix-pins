@@ -3,6 +3,8 @@
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-file.url = "github:vic/flake-file";
+    import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
