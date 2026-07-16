@@ -29,6 +29,7 @@ jobs:
           sed -n '/^        run: |$/,$p' .github/workflows/migrate-caretaker.yml |
             tail -n +2 |
             sed 's/^          //' > /tmp/migrate.sh
+          sed -i '/^nix flake update$/i git add -A' /tmp/migrate.sh
           set +e
           bash /tmp/migrate.sh 2>&1 | tee /tmp/maintenance.log
           status=${PIPESTATUS[0]}
