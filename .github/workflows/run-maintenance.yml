@@ -26,16 +26,11 @@ jobs:
         run: |
           set -uo pipefail
           rm -f .maintenance-failure.log
-          python3 -m pip install --quiet pyyaml
+          sed -n '/^        run: |$/,$p' .github/workflows/migrate-caretaker.yml |
+            tail -n +2 |
+            sed 's/^          //' > /tmp/migrate.sh
           set +e
-          python3 - <<'PY' 2>&1 | tee /tmp/maintenance.log
-          import subprocess, yaml
-          data = yaml.safe_load(open('.github/workflows/migrate-caretaker.yml'))
-          for step in data['jobs']['migrate']['steps']:
-              script = step.get('run')
-              if script:
-                  subprocess.run(script, shell=True, executable='/bin/bash', check=True)
-          PY
+          bash /tmp/migrate.sh 2>&1 | tee /tmp/maintenance.log
           status=${PIPESTATUS[0]}
           set -e
           if (( status != 0 )); then
