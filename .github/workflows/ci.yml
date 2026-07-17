@@ -53,10 +53,19 @@ jobs:
           tail -n 240 devenv-test.log
           exit "$status"
 
+      - name: Capture formatter output
+        if: failure()
+        shell: bash
+        run: |
+          devenv tasks run maintenance:fix:format
+          git diff -- devenv.nix maintenance.nix modules/package.nix > nixfmt.patch
+
       - name: Upload devenv diagnostics
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: devenv-test-log
-          path: devenv-test.log
+          path: |
+            devenv-test.log
+            nixfmt.patch
           if-no-files-found: error
