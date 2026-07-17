@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 let
   nixSources = "find . -type f -name '*.nix' -not -path './.git/*' -not -path './.devenv/*'";
 in
